@@ -14,5 +14,5 @@ redis>=5.0
 channels>=4.0
 channels-redis>=4.2
 django-filter
-
+python-dotenv
 
