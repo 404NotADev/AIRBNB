@@ -10,5 +10,8 @@ class BookingViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         booking = serializer.save(guest=self.request.user)
-        send_booking_email.delay(booking.id)
 
+        try:
+            send_booking_email.delay(booking.id)
+        except Exception as e:
+            print(f"Failed to send email task for booking {booking.id}: {e}")
