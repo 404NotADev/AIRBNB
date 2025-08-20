@@ -2,7 +2,7 @@ from rest_framework import viewsets, permissions
 from django_filters.rest_framework import DjangoFilterBackend
 from .models import Listing
 from .serializers import ListingSerializer
-from listings.tasks import send_new_listing_email
+from listings.tasks import notify_host_new_listing
 
 class ListingViewSet(viewsets.ModelViewSet):
     queryset = Listing.objects.all()
@@ -14,4 +14,4 @@ class ListingViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         listing = serializer.save(owner=self.request.user)
-        send_new_listing_email.delay(listing.id)
+        notify_host_new_listing.delay(listing.id)
