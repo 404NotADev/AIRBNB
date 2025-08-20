@@ -1,5 +1,5 @@
 from django.db import models
-from django.conf import settings  # для ForeignKey на User
+from django.conf import settings  
 
 class Listing(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
