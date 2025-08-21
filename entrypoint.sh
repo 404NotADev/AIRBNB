@@ -1,3 +1,4 @@
+#!/bin/bash
 set -e
 
 sleep 4
@@ -7,3 +8,4 @@ python manage.py migrate
 
 
 exec "$@"
+chmod +x entrypoint.sh

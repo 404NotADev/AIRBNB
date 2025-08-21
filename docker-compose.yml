@@ -4,7 +4,7 @@ services:
   web:
     build: .
     container_name: airbnb_web
-    command: gunicorn marketplace.wsgi:application --bind 0.0.0.0:8000
+    command: gunicorn AIRBNB.wsgi:application --bind 0.0.0.0:8000
     volumes:
       - .:/app
       - ./media:/app/media
@@ -40,7 +40,7 @@ services:
   celery_worker:
     build: .
     container_name: airbnb_celery_worker
-    command: celery -A marketplace worker -l info
+    command: celery -A AIRBNB worker -l info
     volumes:
       - .:/app
     env_file:
@@ -52,7 +52,7 @@ services:
   celery_beat:
     build: .
     container_name: airbnb_celery_beat
-    command: celery -A marketplace beat -l info
+    command: celery -A AIRBNB beat -l info
     volumes:
       - .:/app
     env_file:
@@ -75,3 +75,7 @@ services:
 
 volumes:
   postgres_data:
+
+networks:
+  app-network:
+    driver: bridge
