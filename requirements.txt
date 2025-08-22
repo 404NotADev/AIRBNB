@@ -15,4 +15,4 @@ channels>=4.0
 channels-redis>=4.2
 django-filter
 python-dotenv
-
+drf-yasg>=1.21.7
