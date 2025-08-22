@@ -30,6 +30,20 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'Basic': {
+            'type': 'basic'
+        }
+    },
+    'LOGIN_URL': '/admin/login/',  # или None чтобы отключить логин
+    'LOGOUT_URL': '/admin/logout/',
+}
+
+# Разрешить доступ без авторизации
+SWAGGER_UI_PERMISSION_CLASSES = [
+    'rest_framework.permissions.AllowAny',
+]
 
 # Application definition
 
@@ -44,6 +58,7 @@ INSTALLED_APPS = [
     #import_apps
     'rest_framework',
     'corsheaders',
+    'drf_yasg',
 
     #my_apps
     'users',
@@ -63,7 +78,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.IsAuthenticated',
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
