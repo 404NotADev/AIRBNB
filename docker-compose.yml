@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   web:
     build: .
@@ -16,6 +14,8 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      - app-network
 
   db:
     image: postgres:15
@@ -28,14 +28,18 @@ services:
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     ports:
-      - "5432:5432"
+      - "5435:5432" 
+    networks:
+      - app-network
       
   redis:
     image: redis:7
     container_name: airbnb_redis
     restart: always
     ports:
-      - "6379:6379"
+      - "6379:6379"   
+    networks:
+      - app-network
 
   celery_worker:
     build: .
@@ -48,6 +52,8 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      - app-network
 
   celery_beat:
     build: .
@@ -60,6 +66,8 @@ services:
     depends_on:
       - db
       - redis
+    networks:
+      - app-network
 
   nginx:
     image: nginx:latest
@@ -72,6 +80,8 @@ services:
       - ./static:/app/static
     depends_on:
       - web
+    networks:
+      - app-network
 
 volumes:
   postgres_data:
